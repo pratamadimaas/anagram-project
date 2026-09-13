@@ -3,107 +3,114 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   BarChart3,
   Code2,
-  Users,
   Zap,
-  BookOpen,
-  Video,
-  FileText,
   LayoutTemplate,
   Smartphone,
-  Building2,
-  Sparkles,
+  Globe,
+  Monitor,
   ArrowUpRight,
   ImageOff,
 } from 'lucide-react'
 
 const CATEGORIES = [
-  { id: 'academy', label: 'Academy & Workshop' },
+  { id: 'academy', label: 'Belajar Data Analytics & Programming' },
   { id: 'digital', label: 'Digital Products & Toolkit' },
-  { id: 'development', label: 'Development & Solutions' },
+  { id: 'development', label: 'Jasa Pembuatan Website & Aplikasi' },
 ]
 
 const PRODUCTS = {
   academy: [
     {
+      id: 'quick-course-1',
       icon: BarChart3,
-      title: 'Data Analytics Bootcamp',
+      title: <>Quick Course I: <br /> Python for Basic Data Analytics</>,
       badge: 'PEMULA FRIENDLY',
-      description: 'Belajar mengolah dan membaca data dari nol, langsung dengan studi kasus nyata.',
-      image: '/images/produk/data-analytics-bootcamp.jpg',
+      description: (
+        <>
+          1. Introduction to Data Analytics<br />
+          2. Basics Data: Cleansing, Filtering, Grouping<br />
+          3. Exploratory Data Analysis<br />
+          4. Data Visualization<br />
+          5. Dashboard & Capstone
+        </>
+      ),
+      image: '/images/product1.png',
     },
     {
+      id: 'quick-course-2',
       icon: Code2,
-      title: 'Programming & AI',
-      badge: 'PEMULA FRIENDLY',
-      description: 'Coding, vibe coding, dan cara memakai tools AI untuk produktivitas sehari-hari.',
-      image: '/images/produk/programming-ai.jpg',
-    },
-    {
-      icon: Users,
-      title: 'Pelatihan Tatap Muka / Vidcon',
+      title: <>Quick Course II: <br /> Simple Programming & Professional Vibe Coding</>,
       badge: 'MURAH & MUDAH',
-      description: 'Sesi langsung dengan pengajar, harga terjangkau, jadwal fleksibel.',
+      description: (
+        <>
+          1. Setup & Intro to Google App Script<br />
+          2. Building the Input Form (Frontend)<br />
+          3. Connecting Frontend & Backend<br />
+          4. Dashboard & Visual Summary<br />
+          5. AI-Powered Insights & Deployment
+        </>
+      ),
       image: '/images/produk/pelatihan-tatap-muka.jpg',
     },
     {
+      id: 'quick-course-request',
       icon: Zap,
-      title: 'Mini Workshop',
+      title: 'Quick Course By Request',
       badge: 'MURAH & MUDAH',
-      description: 'Skill sprint intensif satu hari untuk satu topik spesifik.',
+      description: 'Sesi belajar intensif satu hari untuk topik spesifik sesuai kebutuhanmu, jadwal fleksibel.',
       image: '/images/produk/mini-workshop.jpg',
     },
   ],
   digital: [
     {
-      icon: BookOpen,
-      title: 'Self-Paced Microlearning',
+      id: 'undangan-digital',
+      icon: LayoutTemplate,
+      title: 'Undangan Digital',
       badge: 'MURAH & MUDAH',
-      description: 'Modul mandiri yang bisa diakses kapan saja, sesuai kecepatan belajarmu.',
+      description: 'Template undangan digital siap pakai untuk pernikahan, ulang tahun, dan berbagai acara penting lainnya.',
       image: '/images/produk/self-paced-microlearning.jpg',
     },
     {
-      icon: Video,
-      title: 'Membership Video Studi Kasus',
-      badge: 'MURAH & MUDAH',
-      description: 'Kumpulan video pembahasan studi kasus data dan teknologi terbaru.',
-      image: '/images/produk/membership-video.jpg',
-    },
-    {
-      icon: FileText,
-      title: 'E-Book & Guide Praktis',
+      id: 'aplikasi-siap-pakai',
+      icon: Smartphone,
+      title: 'Aplikasi Siap Pakai',
       badge: 'PEMULA FRIENDLY',
-      description: 'Panduan ringkas dan aplikatif untuk belajar mandiri tanpa ribet.',
+      description: 'Aplikasi siap pakai yang tinggal disesuaikan sedikit, langsung bisa dipakai tanpa mulai dari nol.',
       image: '/images/produk/ebook-guide.jpg',
     },
     {
-      icon: LayoutTemplate,
-      title: 'Ready-to-Use Templates',
+      id: 'website-siap-pakai',
+      icon: Globe,
+      title: 'Website Siap Pakai',
       badge: 'MURAH & MUDAH',
-      description: 'Dashboard analitik, automation script, dan boilerplate code siap pakai.',
+      description: 'Template website siap pakai, tinggal isi konten sesuai kebutuhan dan langsung online.',
       image: '/images/produk/ready-to-use-templates.jpg',
     },
   ],
   development: [
     {
-      icon: Smartphone,
-      title: 'Web & Mobile App Development',
+      id: 'pembuatan-website',
+      icon: Globe,
+      title: 'Pembuatan Website',
       badge: 'BY REQUEST',
-      description: 'Full delivery custom build sesuai kebutuhan bisnis atau instansi kamu.',
+      description: 'Pembuatan website custom sesuai kebutuhan bisnis, instansi, atau organisasi kamu.',
       image: '/images/produk/web-mobile-development.jpg',
     },
     {
-      icon: Building2,
-      title: 'Custom Corporate / In-house Training',
+      id: 'pembuatan-aplikasi-web',
+      icon: Code2,
+      title: 'Pembuatan Aplikasi Web Based',
       badge: 'BY REQUEST',
-      description: 'Program pelatihan yang dirancang khusus untuk tim atau organisasi kamu.',
-      image: '/images/produk/corporate-training.jpg',
+      description: 'Pengembangan aplikasi berbasis web, dari dashboard internal hingga sistem khusus sesuai alur kerja tim kamu.',
+      image: '/images/produk/web-mobile-development.jpg',
     },
     {
-      icon: Sparkles,
-      title: 'Konsultasi Data & AI Integration',
+      id: 'pembuatan-aplikasi-desktop',
+      icon: Monitor,
+      title: 'Pembuatan Aplikasi Desktop',
       badge: 'BY REQUEST',
-      description: 'Pendampingan integrasi data dan AI untuk UMKM maupun instansi.',
-      image: '/images/produk/konsultasi-data-ai.jpg',
+      description: 'Aplikasi desktop offline untuk kebutuhan operasional yang butuh performa stabil tanpa tergantung koneksi internet.',
+      image: '/images/produk/web-mobile-development.jpg',
     },
   ],
 }
@@ -202,7 +209,7 @@ export default function ProductMatrix() {
               const Icon = product.icon
               return (
                 <div
-                  key={product.title}
+                  key={product.id}
                   className="group flex flex-col overflow-hidden rounded-2xl border border-white/5 bg-brand-surface transition-colors duration-300 hover:border-brand-red/50"
                 >
                   <ProductImage src={product.image} alt={product.title} Icon={Icon} />
