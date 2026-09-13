@@ -4,8 +4,8 @@ import { Menu, X } from 'lucide-react'
 const NAV_ITEMS = [
   { label: 'Filosofi', href: '#filosofi' },
   { label: 'Program & Produk', href: '#produk' },
-  { label: 'Values', href: '#values' },
   { label: 'Keunggulan', href: '#keunggulan' },
+  { label: 'Values', href: '#values' },
   { label: 'Kontak', href: '#kontak' },
 ]
 
