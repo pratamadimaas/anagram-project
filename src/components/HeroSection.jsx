@@ -6,7 +6,7 @@ const QUIZ_URL =
   'https://script.google.com/macros/s/AKfycbyuQPlV1vl-6ohqAhrPDJRlrhOlpbmXCUN-eO_gPr0_5gtFPOL0bIAiiBTCvAQ_pD-g/exec'
 
 const HERO_SLIDES = [
-  { src: '/images/hero/slide-1.jpg', alt: 'Sesi kelas Data Analytics' },
+  { src: '/images/banner1.png', alt: 'Sesi kelas Data Analytics' },
   { src: '/images/hero/slide-2.jpg', alt: 'Sesi kelas Programming & AI' },
   { src: '/images/hero/slide-3.jpg', alt: 'Peserta praktik proyek nyata' },
 ]

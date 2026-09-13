@@ -27,8 +27,8 @@ export default function PhilosophyAndValues() {
       <div className="mx-auto max-w-5xl">
         <blockquote className="border-l-2 border-brand-red bg-brand-surface/60 px-6 py-6 lg:px-8 lg:py-8">
           <p className="font-display text-xl leading-relaxed text-white lg:text-2xl">
-            "Dunia tidak kekurangan huruf, ia hanya menunggu seseorang yang berani
-            menyusunnya ulang."
+            "Anagram tidak menciptakan huruf baru, ia menyusun ulang yang sudah ada
+            menjadi makna yang belum pernah ada."
           </p>
         </blockquote>
 

@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 
 const NAV_ITEMS = [
-  { label: 'Filosofi', href: '#filosofi' },
   { label: 'Program & Produk', href: '#produk' },
   { label: 'Keunggulan', href: '#keunggulan' },
+  { label: 'Filosofi', href: '#filosofi' },
   { label: 'Values', href: '#values' },
   { label: 'Kontak', href: '#kontak' },
 ]

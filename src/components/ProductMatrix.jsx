@@ -167,7 +167,7 @@ export default function ProductMatrix() {
   const [active, setActive] = useState('academy')
 
   return (
-    <section id="produk" className="px-6 py-20 lg:px-10 lg:py-28">
+    <section id="produk" className="px-6 pb-20 pt-8 lg:px-10 lg:pb-28 lg:pt-12">
       <div className="mx-auto max-w-6xl">
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
