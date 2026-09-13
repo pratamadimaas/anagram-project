@@ -3,8 +3,8 @@ import { Menu, X } from 'lucide-react'
 
 const NAV_ITEMS = [
   { label: 'Filosofi', href: '#filosofi' },
-  { label: 'Values', href: '#values' },
   { label: 'Program & Produk', href: '#produk' },
+  { label: 'Values', href: '#values' },
   { label: 'Keunggulan', href: '#keunggulan' },
   { label: 'Kontak', href: '#kontak' },
 ]

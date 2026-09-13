@@ -14,8 +14,8 @@ export default function App() {
       <Navbar />
       <main>
         <HeroSection />
-        <PhilosophyAndValues />
         <ProductMatrix />
+        <PhilosophyAndValues />
         <KeyAdvantages />
         <TargetAudience />
         <VisionBanner />
