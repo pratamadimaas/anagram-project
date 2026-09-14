@@ -35,7 +35,7 @@ export default function Navbar() {
             className="h-8 w-8 rounded-full object-cover"
           />
           <span className="font-display text-lg font-semibold tracking-tight text-white">
-            Anagram Project
+            Anagram
           </span>
         </a>
 

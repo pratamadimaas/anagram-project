@@ -1,6 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, MessageCircle, Target, ImageOff, ChevronLeft, ChevronRight } from 'lucide-react'
+import {
+  ArrowRight,
+  MessageCircle,
+  Target,
+  ImageOff,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react'
 
 const QUIZ_URL =
   'https://script.google.com/macros/s/AKfycbyuQPlV1vl-6ohqAhrPDJRlrhOlpbmXCUN-eO_gPr0_5gtFPOL0bIAiiBTCvAQ_pD-g/exec'
@@ -26,7 +33,11 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: 'easeOut' },
+  },
 }
 
 function HeroSlide({ src, alt, failed, onError }) {
@@ -47,7 +58,7 @@ function HeroSlide({ src, alt, failed, onError }) {
       alt={alt}
       loading="eager"
       onError={onError}
-      className="h-full w-full object-cover object-center"
+      className="h-full w-full object-contain object-center sm:object-cover"
     />
   )
 }
@@ -57,20 +68,24 @@ function HeroCarousel() {
   const [failedSlides, setFailedSlides] = useState({})
   const timerRef = useRef(null)
 
+  const stopTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+      timerRef.current = null
+    }
+  }, [])
+
   const startTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current)
-    // Bergeser otomatis setiap 5 detik (5000 ms)
+    stopTimer()
     timerRef.current = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % HERO_SLIDES.length)
     }, 5000)
-  }, [])
+  }, [stopTimer])
 
   useEffect(() => {
     startTimer()
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current)
-    }
-  }, [startTimer])
+    return () => stopTimer()
+  }, [startTimer, stopTimer])
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % HERO_SLIDES.length)
@@ -93,7 +108,7 @@ function HeroCarousel() {
 
   return (
     <div className="group relative w-full">
-      <div className="relative aspect-[21/9] sm:aspect-[2.4/1] md:aspect-[2.8/1] min-h-[360px] w-full overflow-hidden border-b border-white/10 bg-brand-surface">
+      <div className="relative aspect-[21/9] min-h-[360px] w-full overflow-hidden border-b border-white/10 bg-brand-surface sm:aspect-[2.4/1] md:aspect-[2.8/1]">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}
@@ -112,27 +127,27 @@ function HeroCarousel() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Tombol Panah Kiri */}
+        {/* Tombol Navigasi Kiri */}
         <button
           type="button"
           onClick={handlePrev}
           aria-label="Foto sebelumnya"
-          className="absolute left-4 top-1/2 z-10 -translate-y-1/2 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-black/35 backdrop-blur-md border border-white/15 text-white/80 transition-all duration-300 hover:bg-black/60 hover:text-white hover:scale-105 active:scale-95"
+          className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white/80 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-black/60 hover:text-white active:scale-95 md:h-12 md:w-12"
         >
           <ChevronLeft size={22} />
         </button>
 
-        {/* Tombol Panah Kanan */}
+        {/* Tombol Navigasi Kanan */}
         <button
           type="button"
           onClick={handleNext}
           aria-label="Foto berikutnya"
-          className="absolute right-4 top-1/2 z-10 -translate-y-1/2 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-black/35 backdrop-blur-md border border-white/15 text-white/80 transition-all duration-300 hover:bg-black/60 hover:text-white hover:scale-105 active:scale-95"
+          className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white/80 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-black/60 hover:text-white active:scale-95 md:h-12 md:w-12"
         >
           <ChevronRight size={22} />
         </button>
 
-        {/* Indikator Slide Titik */}
+        {/* Indikator Slide */}
         <div className="absolute bottom-4 left-0 right-0 z-10 flex items-center justify-center gap-2">
           {HERO_SLIDES.map((slide, i) => (
             <button
@@ -141,7 +156,9 @@ function HeroCarousel() {
               onClick={() => handleSelectDot(i)}
               aria-label={`Tampilkan slide ${i + 1}`}
               className={`h-1.5 rounded-full transition-all duration-300 ${
-                i === activeIndex ? 'w-6 bg-brand-red' : 'w-1.5 bg-white/30 hover:bg-white/60'
+                i === activeIndex
+                  ? 'w-6 bg-brand-red'
+                  : 'w-1.5 bg-white/30 hover:bg-white/60'
               }`}
             />
           ))}
@@ -153,13 +170,16 @@ function HeroCarousel() {
 
 export default function HeroSection() {
   return (
-    <section id="top" className="relative w-full pb-24 lg:pb-32 overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-crimson-fade" aria-hidden="true" />
+    <section id="top" className="relative w-full overflow-hidden pb-24 lg:pb-32">
+      <div
+        className="pointer-events-none absolute inset-0 bg-crimson-fade"
+        aria-hidden="true"
+      />
 
-      {/* 1. Carousel Full-Width dengan Tombol Navigasi Panah */}
+      {/* Carousel Header */}
       <HeroCarousel />
 
-      {/* 2. Konten Teks */}
+      {/* Konten Utama */}
       <motion.div
         className="relative mx-auto flex max-w-4xl flex-col items-center px-6 pt-10 text-center lg:px-10"
         variants={containerVariants}
@@ -180,12 +200,19 @@ export default function HeroSection() {
           Reinvent your skills, accelerate your future.
         </motion.h1>
 
-        <motion.p variants={itemVariants} className="mt-6 max-w-2xl text-base text-brand-muted lg:text-lg">
-          Teknologi dan data bisa dikuasai siapa saja. Cepat, praktis, dan terjangkau,
-          tanpa perlu latar belakang IT sama sekali.
+        <motion.p
+          variants={itemVariants}
+          className="mt-6 max-w-2xl text-base text-brand-muted lg:text-lg"
+        >
+          Teknologi dan data bisa dikuasai siapa saja. Cepat, praktis, dan
+          terjangkau, tanpa perlu latar belakang IT sama sekali.
         </motion.p>
 
-        <motion.div variants={itemVariants} className="mt-10 flex flex-col gap-4 sm:flex-row">
+        {/* Tombol Aksi (CTA) */}
+        <motion.div
+          variants={itemVariants}
+          className="mt-10 flex flex-col gap-4 sm:flex-row"
+        >
           <a
             href="#produk"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-red px-7 py-3 text-sm font-medium text-white shadow-glow transition-colors duration-300 hover:bg-brand-darkred"
@@ -203,6 +230,7 @@ export default function HeroSection() {
           </a>
         </motion.div>
 
+        {/* Card Asesmen */}
         <motion.a
           variants={itemVariants}
           href={QUIZ_URL}
@@ -227,6 +255,7 @@ export default function HeroSection() {
           />
         </motion.a>
 
+        {/* Bagian Statistik */}
         <motion.dl
           variants={itemVariants}
           className="mt-16 grid w-full grid-cols-1 gap-6 border-t border-white/10 pt-10 sm:grid-cols-3"
