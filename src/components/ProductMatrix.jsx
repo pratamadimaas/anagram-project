@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  BarChart3,
   Code2,
-  Zap,
   LayoutTemplate,
   Smartphone,
   Globe,
@@ -22,7 +20,7 @@ const PRODUCTS = {
   academy: [
     {
       id: 'quick-course-1',
-      icon: BarChart3,
+      // icon dihilangkan untuk produk ini
       title: <>Quick Course I: <br /> Python for Basic Data Analytics</>,
       badge: 'PEMULA FRIENDLY',
       description: (
@@ -38,7 +36,7 @@ const PRODUCTS = {
     },
     {
       id: 'quick-course-2',
-      icon: Code2,
+      // icon dihilangkan untuk produk ini
       title: <>Quick Course II: <br /> Simple Programming & Professional Vibe Coding</>,
       badge: 'MURAH & MUDAH',
       description: (
@@ -50,15 +48,15 @@ const PRODUCTS = {
           5. AI-Powered Insights & Deployment
         </>
       ),
-      image: '/images/produk/pelatihan-tatap-muka.jpg',
+      image: '/images/product2.png',
     },
     {
       id: 'quick-course-request',
-      icon: Zap,
+      // icon dihilangkan untuk produk ini
       title: 'Quick Course By Request',
       badge: 'MURAH & MUDAH',
       description: 'Sesi belajar intensif satu hari untuk topik spesifik sesuai kebutuhanmu, jadwal fleksibel.',
-      image: '/images/produk/mini-workshop.jpg',
+      image: '/images/product3.png',
     },
   ],
   digital: [
@@ -140,9 +138,12 @@ function ProductImage({ src, alt, Icon }) {
           <ImageOff size={24} strokeWidth={1.5} />
           <span className="text-[11px]">Foto menyusul</span>
         </div>
-        <div className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-brand-bg/80 text-brand-red backdrop-blur">
-          <Icon size={18} />
-        </div>
+        {/* Badge icon hanya dirender kalau produk ini memang punya Icon */}
+        {Icon && (
+          <div className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-brand-bg/80 text-brand-red backdrop-blur">
+            <Icon size={18} />
+          </div>
+        )}
       </div>
     )
   }
@@ -156,9 +157,12 @@ function ProductImage({ src, alt, Icon }) {
         onError={() => setFailed(true)}
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
       />
-      <div className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-brand-bg/80 text-brand-red backdrop-blur">
-        <Icon size={18} />
-      </div>
+      {/* Badge icon hanya dirender kalau produk ini memang punya Icon */}
+      {Icon && (
+        <div className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-brand-bg/80 text-brand-red backdrop-blur">
+          <Icon size={18} />
+        </div>
+      )}
     </div>
   )
 }

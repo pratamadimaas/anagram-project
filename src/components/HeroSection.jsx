@@ -24,6 +24,10 @@ const STATS = [
   { value: 'Cepat', label: 'Terjangkau dan langsung praktik' },
 ]
 
+// Fallback rasio sebelum gambar aktif selesai diukur (mendekati banner1.png
+// aslinya, ~2.8:1). Begitu gambar selesai load, rasio SEBENARNYA yang dipakai.
+const FALLBACK_MOBILE_RATIO = 2.8
+
 const containerVariants = {
   hidden: {},
   show: {
@@ -40,7 +44,7 @@ const itemVariants = {
   },
 }
 
-function HeroSlide({ src, alt, failed, onError }) {
+function HeroSlide({ src, alt, failed, onError, onLoad }) {
   if (!src || failed) {
     return (
       <div className="flex h-full w-full items-center justify-center bg-brand-surface-2">
@@ -58,6 +62,12 @@ function HeroSlide({ src, alt, failed, onError }) {
       alt={alt}
       loading="eager"
       onError={onError}
+      onLoad={onLoad}
+      // Mobile: object-contain — tapi karena container mobile sudah dipaksa
+      // sama persis dengan rasio asli foto (lihat mobileAspectStyle di bawah),
+      // hasilnya identik dengan cover: full, tanpa crop, tanpa ruang kosong.
+      // sm ke atas (PC): object-cover, supaya foto full edge-to-edge kiri-kanan
+      // mengikuti rasio [2.4/1] / [2.8/1] yang sudah pas untuk layar lebar.
       className="h-full w-full object-contain object-center sm:object-cover"
     />
   )
@@ -66,7 +76,20 @@ function HeroSlide({ src, alt, failed, onError }) {
 function HeroCarousel() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [failedSlides, setFailedSlides] = useState({})
+  // Rasio asli (naturalWidth / naturalHeight) tiap slide, diukur saat gambar load.
+  const [ratios, setRatios] = useState({})
+  const [isMobile, setIsMobile] = useState(false)
   const timerRef = useRef(null)
+
+  // Deteksi mobile lewat matchMedia (breakpoint sm Tailwind = 640px), supaya
+  // fix ini HANYA berlaku di HP dan tidak menyentuh tampilan PC yang sudah oke.
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)')
+    const update = () => setIsMobile(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
 
   const stopTimer = useCallback(() => {
     if (timerRef.current) {
@@ -106,9 +129,29 @@ function HeroCarousel() {
     setFailedSlides((prev) => ({ ...prev, [index]: true }))
   }, [])
 
+  const handleSlideLoad = useCallback((index, e) => {
+    const { naturalWidth, naturalHeight } = e.target
+    if (naturalWidth && naturalHeight) {
+      setRatios((prev) => ({ ...prev, [index]: naturalWidth / naturalHeight }))
+    }
+  }, [])
+
+  const activeRatio = ratios[activeIndex] ?? FALLBACK_MOBILE_RATIO
+
+  // Hanya di mobile: paksa aspect-ratio container SAMA PERSIS dengan rasio asli
+  // foto yang sedang tampil. Karena bentuknya jadi identik dengan foto aslinya,
+  // otomatis tidak ada spasi kosong di atas/bawah DAN tidak ada bagian terpotong
+  // — tanpa mengubah file banner atau ukurannya sama sekali.
+  const mobileAspectStyle = isMobile
+    ? { aspectRatio: String(activeRatio) }
+    : undefined
+
   return (
     <div className="group relative w-full">
-      <div className="relative aspect-[21/9] min-h-[360px] w-full overflow-hidden border-b border-white/10 bg-brand-surface sm:aspect-[2.4/1] md:aspect-[2.8/1]">
+      <div
+        className="relative aspect-[2.8/1] w-full overflow-hidden border-b border-white/10 bg-brand-surface sm:aspect-[2.4/1] sm:min-h-[300px] md:aspect-[2.8/1] md:min-h-[360px]"
+        style={mobileAspectStyle}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}
@@ -123,6 +166,7 @@ function HeroCarousel() {
               alt={HERO_SLIDES[activeIndex].alt}
               failed={failedSlides[activeIndex]}
               onError={() => handleSlideError(activeIndex)}
+              onLoad={(e) => handleSlideLoad(activeIndex, e)}
             />
           </motion.div>
         </AnimatePresence>
