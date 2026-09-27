@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Send, MessageCircle } from 'lucide-react'
 
-const WHATSAPP_NUMBER = '6281234567890' // Ganti dengan nomor WhatsApp resmi Anagram Project
+const WHATSAPP_NUMBER = '085111441135' 
 
 export default function CallToAction() {
   const [form, setForm] = useState({ name: '', contact: '', need: '' })
@@ -13,7 +13,6 @@ export default function CallToAction() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    // Integrasikan dengan endpoint / CRM kamu di sini.
     setSent(true)
   }
 
@@ -32,7 +31,7 @@ export default function CallToAction() {
           </h2>
           <p className="mt-4 text-brand-muted">
             Ceritakan kebutuhanmu, tim Anagram akan membantu menentukan program atau solusi
-            yang paling pas — mulai dari kelas untuk pemula sampai proyek by request.
+            yang paling pas, mulai dari kelas untuk pemula sampai proyek by request.
           </p>
           <a
             href={`https://wa.me/${WHATSAPP_NUMBER}?text=${waMessage}`}
